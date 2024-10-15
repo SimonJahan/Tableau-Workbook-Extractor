@@ -116,7 +116,7 @@ The script is designed to extract and decode images, but it can be modified to i
 
 ## Authors
 
-- [Simon JAHAN](https://github.com/your-username)
+- [Simon JAHAN](https://github.com/SimonJahan)
 
 ## License
 
