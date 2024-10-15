@@ -134,5 +134,3 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE) fil
 8. **Customization**: Suggestions for extending the script's functionality.
 9. **Contributions**: Encouraging contributions and pull requests.
 10. **Authors** and **License**: Credits and licensing information.
-
-This version is suitable for an international audience and is ready to be published on GitHub.
