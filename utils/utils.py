@@ -1,5 +1,4 @@
 import zipfile
-import os
 from xml.etree import ElementTree as ET
 import base64
 from pathlib import Path
@@ -70,20 +69,26 @@ def main() -> None:
     Main function to extract a .twbx file, parse the .twb file within, and decode shape images.
     """
     tk.Tk().withdraw()
-    path_to_zip_file = askopenfilename(filetypes=[("Tableau Workbook", "*.twbx")])
+    path_to_file = askopenfilename(filetypes=[("Tableau Packaged Workbook", "*.twbx"), ("Tableau Workbook", "*.twb")])
     
-    if not path_to_zip_file:
+    if not path_to_file:
         print("Aucun fichier sélectionné.")
         return
     
-    twbx_file = Path(path_to_zip_file).stem
-    extract_dir = Path.cwd() / twbx_file
-    
-    if not extract_zip_file(path_to_zip_file, extract_dir):
-        return
+    if Path(path_to_file).suffix == ".twbx":
+        twbx_file_name = Path(path_to_file).stem
+        extract_dir = Path.cwd() / twbx_file_name
+        
+        if not extract_zip_file(path_to_file, extract_dir):
+            return
 
-    # Trouver le fichier .twb
-    twb_file = next(extract_dir.glob("*.twb"), None)
+        # Trouver le fichier .twb
+        twb_file = next(extract_dir.glob("*.twb"), None)
+
+    else:
+        twb_file = path_to_file
+        twb_file_name = Path(path_to_file).stem
+        extract_dir = Path.cwd() / twb_file_name
     
     if twb_file is None:
         print("Fichier TWB introuvable.")
