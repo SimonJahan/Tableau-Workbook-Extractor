@@ -82,6 +82,7 @@ TableauWorkbookExtractor/
 │
 ├── main.py            # Main script
 ├── README.md          # Documentation
+├── LICENSE            # Licensing file
 ├── requirements.txt   # (Optional) List of dependencies for pip installation
 ├── utils/             # Utilities folder
     └── utils.py       # Utilities script
