@@ -53,7 +53,7 @@ def decode_shape_images(shapes: list[ET.Element], extract_dir: Path) -> None:
         img_name = shape_element.attrib.get('name', '')
         img_directory = extract_dir / f"Shape/{img_name.split('/')[0]}"
         img_path = extract_dir / f"Shape/{img_name}"
-        
+
         try:
             img_data = base64.b64decode(shape_element.text.encode("utf-8"))
         except base64.binascii.Error as e:
@@ -64,21 +64,27 @@ def decode_shape_images(shapes: list[ET.Element], extract_dir: Path) -> None:
         with open(img_path, "wb") as img_file:
             img_file.write(img_data)
 
-def main() -> None:
+def main(twbx: str = "") -> None:
     """
     Main function to extract a .twbx file, parse the .twb file within, and decode shape images.
+
+    Args:
+        twbx (str): Path to the entry twbx.
     """
-    tk.Tk().withdraw()
-    path_to_file = askopenfilename(filetypes=[("Tableau Packaged Workbook", "*.twbx"), ("Tableau Workbook", "*.twb")])
-    
+    if twbx == "":
+        tk.Tk().withdraw()
+        path_to_file = askopenfilename(filetypes=[("Tableau Packaged Workbook", "*.twbx"), ("Tableau Workbook", "*.twb")])
+    else :
+        path_to_file = twbx
+
     if not path_to_file:
-        print("Aucun fichier sélectionné.")
+        print("No selected file.")
         return
-    
+
     if Path(path_to_file).suffix == ".twbx":
         twbx_file_name = Path(path_to_file).stem
         extract_dir = Path.cwd() / twbx_file_name
-        
+
         if not extract_zip_file(path_to_file, extract_dir):
             return
 
@@ -89,13 +95,13 @@ def main() -> None:
         twb_file = path_to_file
         twb_file_name = Path(path_to_file).stem
         extract_dir = Path.cwd() / twb_file_name
-    
+
     if twb_file is None:
-        print("Fichier TWB introuvable.")
+        print("TWB not found.")
         return
-    
+
     root = parse_twb_file(twb_file)
-    
+
     if root is None:
         return
 
